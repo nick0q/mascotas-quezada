@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using mascota.Models;
 
 namespace mascota.Data;
 
@@ -9,4 +10,30 @@ public class ApplicationDbContext : IdentityDbContext
         : base(options)
     {
     }
+
+    DbSet<Mascota> DbSetMascota {get; set;}
+    DbSet<Adoptante> DbSetAdoptante {get; set;} 
+    DbSet<MascotaAdoptante> DbSetMascotaAdoptante {get; set;} 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+   
+        modelBuilder.Entity<Mascota>()
+            .HasOne(m => m.MascotaAdoptante)
+            .WithOne(ma => ma.Mascota)
+            .HasForeignKey<MascotaAdoptante>(ma => ma.MascotaId);
+
+       
+        modelBuilder.Entity<Adoptante>()
+            .HasMany(a => a.MascotasAdoptadas)
+            .WithOne(ma => ma.Adoptante)
+            .HasForeignKey(ma => ma.AdoptanteId);
+
+        
+        modelBuilder.Entity<MascotaAdoptante>()
+            .HasIndex(ma => ma.MascotaId)
+            .IsUnique();
+    }
+
 }
