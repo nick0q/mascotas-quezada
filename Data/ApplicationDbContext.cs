@@ -11,9 +11,9 @@ public class ApplicationDbContext : IdentityDbContext
     {
     }
 
-    DbSet<Mascota> DbSetMascota {get; set;}
-    DbSet<Adoptante> DbSetAdoptante {get; set;} 
-    DbSet<MascotaAdoptante> DbSetMascotaAdoptante {get; set;} 
+    public DbSet<Mascota> DbSetMascota {get; set;}
+    public DbSet<Adoptante> DbSetAdoptante {get; set;} 
+    public DbSet<MascotaAdoptante> DbSetMascotaAdoptante {get; set;} 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
